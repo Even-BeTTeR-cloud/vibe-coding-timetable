@@ -1,0 +1,415 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-red: #c62917;
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --grid-line: #eeeeee;
+    --text-main: #292929;
+    --text-sub: #a6a6a6;
+    --header-height: 70px;
+    --sidebar-width: 280px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    overflow: hidden;
+}
+
+/* Header Styling */
+.header {
+    height: var(--header-height);
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border-bottom: 1px solid var(--grid-line);
+}
+
+.title-container .semester {
+    font-size: 12px;
+    color: var(--primary-red);
+    font-weight: 700;
+}
+
+.title-container .timetable-name {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.2s;
+}
+
+.icon-btn:hover {
+    color: var(--primary-red);
+}
+
+/* Layout */
+.app-layout {
+    display: flex;
+    height: calc(100vh - var(--header-height));
+}
+
+/* Sidebar Subject Panel */
+.subject-panel {
+    width: var(--sidebar-width);
+    background: white;
+    border-right: 1px solid var(--grid-line);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-panel {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    display: none; /* Only for mobile */
+}
+
+#create-subject-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#create-subject-form input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.color-picker-simple {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--text-sub);
+}
+
+.add-subj-btn {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--grid-line);
+    margin: 10px 0;
+}
+
+.group-creator {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #fdfdfd;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.group-creator h4 {
+    font-size: 13px;
+    color: #444;
+}
+
+.subject-checklist {
+    max-height: 120px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 5px;
+}
+
+.subject-checklist label {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.group-pool {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 10px;
+}
+
+.draggable-group {
+    padding: 10px 16px;
+    background: #333;
+    color: white;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: grab;
+    border: 2px solid white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.draggable-group::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px dashed #333;
+    border-radius: 8px;
+    z-index: -1;
+}
+
+.draggable-subject {
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    cursor: grab;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.1s;
+}
+
+.draggable-subject:active {
+    cursor: grabbing;
+    transform: scale(0.95);
+}
+
+.trash-zone {
+    margin-top: auto;
+    border: 2px dashed #ffcfcf;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: #ff5e5e;
+    font-size: 12px;
+}
+
+.trash-zone.drag-over {
+    background: #fff5f5;
+    border-color: #ff5e5e;
+}
+
+/* Timetable Grid */
+.timetable-container {
+    flex: 1;
+    padding: 20px;
+    overflow: auto;
+}
+
+.grid-wrapper {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.period-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.period-table th {
+    height: 40px;
+    font-size: 14px;
+    color: #000;
+    font-weight: 600;
+    border-bottom: 2px solid var(--grid-line);
+    border-right: 2px solid var(--grid-line);
+}
+
+.period-table td {
+    height: 90px;
+    border-bottom: 2px solid var(--grid-line);
+    border-right: 2px solid var(--grid-line);
+    vertical-align: top;
+    position: relative;
+}
+
+.sidebar-cell {
+    width: 80px;
+    text-align: center;
+    background: #fafafa;
+}
+
+.period-num {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.period-time {
+    font-size: 10px;
+    color: var(--text-sub);
+}
+
+/* Lunch Row */
+.lunch-row td {
+    height: 60px;
+    background: linear-gradient(135deg, #fff9c4 0%, #ffecb3 100%);
+    vertical-align: middle;
+    border-bottom: 2px solid var(--grid-line);
+}
+
+.lunch-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font-size: 20px;
+    animation: subtle 2s infinite ease-in-out;
+}
+
+.lunch-text {
+    color: #ff8f00;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+}
+
+@keyframes subtle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+/* Dropped Course Styling */
+.course-block {
+    width: 100%;
+    height: 100%;
+    padding: 6px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    cursor: pointer;
+    animation: fadeIn 0.2s ease-out;
+    border-radius: 4px;
+}
+
+/* Grouped Elective Container */
+.subject-group-container {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    gap: 2px;
+    padding: 2px;
+}
+
+.subject-group-header {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    z-index: 10;
+    white-space: nowrap;
+}
+
+/* Internal Card for Multi-Subject */
+.mini-subject-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4px;
+    border-radius: 4px;
+    color: white;
+    font-size: 11px;
+    overflow: hidden;
+}
+
+.mini-subject-card .m-name {
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.mini-subject-card .m-teacher {
+    font-size: 9px;
+    opacity: 0.9;
+}
+
+.course-block .name {
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.course-block .info {
+    font-size: 10px;
+    opacity: 0.9;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Drag Over Effect */
+.drop-zone.drag-over {
+    background-color: rgba(0,0,0,0.03);
+}
+
+@media (max-width: 1000px) {
+    .subject-panel {
+        position: fixed;
+        left: -100%;
+        top: var(--header-height);
+        height: 100%;
+        z-index: 100;
+        transition: 0.3s;
+    }
+    .subject-panel.active {
+        left: 0;
+    }
+    .close-panel { display: block; }
+}

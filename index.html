@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학교 시간표 - 드래그 앤 드롭</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="title-container">
+            <div class="semester">2026학년도 일정</div>
+            <div class="timetable-name">학생 시간표 관리</div>
+        </div>
+        <div class="action-buttons">
+            <!-- Logos removed as per request -->
+        </div>
+    </header>
+
+    <main class="app-layout">
+        <!-- Sidebar for Subjects -->
+        <aside class="subject-panel" id="subject-panel">
+            <div class="panel-header">
+                <h3>과목 목록</h3>
+                <button class="close-panel" id="close-subject-panel">&times;</button>
+            </div>
+            
+            <form id="create-subject-form">
+                <input type="text" id="subj-name" placeholder="과목명 (예: 수학)" required>
+                <input type="text" id="subj-teacher" placeholder="선생님 성함">
+                <input type="text" id="subj-room" placeholder="강의실">
+                <div class="color-picker-simple">
+                    <input type="color" id="subj-color" value="#f68d7a">
+                    <span>색상 선택</span>
+                </div>
+                <button type="submit" class="add-subj-btn">과목 생성</button>
+            </form>
+
+            <div class="subject-pool" id="subject-pool">
+                <!-- Draggable subjects -->
+            </div>
+
+            <hr class="divider">
+
+            <div class="group-creator">
+                <h4>그룹(이동수업) 만들기</h4>
+                <div id="subject-checklist" class="subject-checklist">
+                    <!-- Checkboxes for subjects -->
+                </div>
+                <input type="text" id="group-name" placeholder="그룹명 (예: 선택 A)">
+                <button id="create-group-btn" class="add-subj-btn" style="background: #ef5350;">그룹 생성</button>
+            </div>
+
+            <div class="group-pool" id="group-pool">
+                <!-- Draggable groups -->
+            </div>
+
+            <div class="trash-zone" id="trash-zone">
+                <i class="fa-solid fa-trash-can"></i>
+                <span>여기에 드래그하여 삭제</span>
+            </div>
+        </aside>
+
+        <!-- Timetable Grid -->
+        <section class="timetable-container">
+            <div class="grid-wrapper">
+                <table class="period-table">
+                    <thead>
+                        <tr>
+                            <th class="sidebar-corner"></th>
+                            <th>월</th>
+                            <th>화</th>
+                            <th>수</th>
+                            <th>목</th>
+                            <th>금</th>
+                        </tr>
+                    </thead>
+                    <tbody id="timetable-body">
+                        <!-- Periods 1-7 + Lunch dynamically generated -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
